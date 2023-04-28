@@ -174,6 +174,57 @@ Fri Apr 28 20:49:56 MSK 2023
 
 #### 1.6. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_max, который пишет текущую дату/время в файл output.log в директории *_min
 
+Там создаем файл ```script_min``` командой:
+
+```console
+touch script_max
+```
+Теперь открываем файл:
+
+```console
+nano script_min
+```
+
+Прописываем сам скрипт
+
+```console
+#!/bin/bash
+date | tee /usr/local/folder_min/output.log
+```
+
+Запускаем файл командами:
+
+```console
+chmod a=rwx script_min
+./script_max
+```
+
+Результаты:
+
+В папке ```folder_max``` появились файл ```script_min```:
+
+```console
+user_max_1@DESKTOP-E880T0K:/usr/local/folder_max$ ls -l
+total 8
+-rw-rw-r-- 1 user_max_1 user_max_1 29 Apr 28 20:49 output.log
+-rwxrwxr-x 1 user_max_1 user_max_1 35 Apr 28 20:35 script_max
+-rwxrwxrwx 1 user_max_1 user_max_1 56 Apr 28 21:11 script_min
+```
+
+Идем в ```/usr/local/folder_min``` и видим, что там появился файл ```output.log```:
+
+```console
+user_max_1@DESKTOP-E880T0K:/usr/local/folder_min$ ls -l
+total 4
+-rw-rw-r-- 1 user_max_1 user_max_1 29 Apr 28 21:11 output.log
+```
+
+Затем с помощью команды ```nano output.log``` открываем его и видим там таймкод:
+
+```console
+Fri Apr 28 21:11:43 MSK 2023
+```
+
 #### 1.7. Исполнить (пользователем *_min) скрипт в директории folder_max, который пишет текущую дату/время в файл output.log в директории *_min
 
 #### 1.8. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_min, который пишет текущую дату/время в файл output.log в директории *_max

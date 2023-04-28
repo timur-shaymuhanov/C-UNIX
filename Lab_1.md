@@ -32,25 +32,7 @@ drwxr-xr-x  2 root          root              4096 Apr 28 14:53 folder_min
 ...
 ```
 
-#### 1.2 Создать 2-х группы пользователей: group_max, group_min
-
-Команды:
-
-```console
-sudo addgroup group_max
-sudo addgroup group_min
-```
-
-Результат:
-
-```console
-(base) timurverycool@DESKTOP-E880T0K:~$ getent passwd {1000..60000}
-timurverycool:x:1000:1000:,,,:/home/timurverycool:/bin/bash
-user_max_1:x:1001:1003::/home/user_max_1:/bin/bash
-user_min_1:x:1002:1004:,,,:/home/user_min_1:/bin/bash
-```
-
-#### 1.3 Создать 2-х пользователей: user_max_1, user_min_1
+#### 1.2 Создать 2-х пользователей: user_max_1, user_min_1
 
 Команды:
 
@@ -66,6 +48,31 @@ sudo adduser user_min_1
 timurverycool:x:1000:1000:,,,:/home/timurverycool:/bin/bash
 user_max_1:x:1001:1003::/home/user_max_1:/bin/bash
 user_min_1:x:1002:1004:,,,:/home/user_min_1:/bin/bash
+```
+#### 1.3 Создать 2-х группы пользователей: group_max, group_min
+
+Команды:
+
+```console
+sudo addgroup group_max
+sudo addgroup group_min
+```
+
+И соответственно добавим в них пользователей ```user_min_1``` и ```user_max_1```. Команды:
+
+```console
+sudo usermod -a -G group_max user_max_1
+sudo usermod -a -G group_min user_min_1
+```
+
+Результат:
+
+```console
+(base) timurverycool@DESKTOP-E880T0K:~$ cat /etc/group
+...
+group_max:x:1001:user_max_1
+group_min:x:1002:user_min_1
+...
 ```
 
 #### 1.4. Для пользователей из группы *_max дать полный доступ на директории *_max и *_min. Для пользователей группы *_min дать полный доступ только на директорию *_min
@@ -83,11 +90,9 @@ sudo chown :group_max folder_max
 (base) timurverycool@DESKTOP-E880T0K:~$ ls -l
 ...
 drwxr-xr-x  2 root          group_max         4096 Apr 28 14:52 folder_max
-drwxr-xr-x  2 root          group_min         4096 Apr 28 14:53 folder_min
+drwxr-xr-x  2 root          group_max         4096 Apr 28 14:53 folder_min
 ...
 ```
-
-Группа group_max является владельцем папок folder_max и folder_min
 
 Команды:
 sudo setfacl -m g:group_max:rwx folder_max

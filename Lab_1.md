@@ -14,6 +14,14 @@
 
 #### 1.1 В папке /USR/LOCAL/ создать 2 директории: folder_max, folder_min
 
+Сначала идем в нужную папку:
+
+```console
+cd /usr/local/
+```
+
+Там создаем папки
+
 Команды:
 
 ```console
@@ -24,7 +32,7 @@ sudo mkdir folder_min
 Результат:
 
 ```console
-(base) timurverycool@DESKTOP-E880T0K:~$ ls -l
+(base) timurverycool@DESKTOP-E880T0K:/usr/local/$ ls -l
 total 74832
 ...
 drwxr-xr-x  2 root          root              4096 Apr 28 14:52 folder_max
@@ -87,7 +95,7 @@ sudo chown :group_max folder_max
 Результат:
 
 ```console
-(base) timurverycool@DESKTOP-E880T0K:~$ ls -l
+(base) timurverycool@DESKTOP-E880T0K:/usr/local/$ ls -l
 ...
 drwxr-xr-x  2 root          group_max         4096 Apr 28 14:52 folder_max
 drwxr-xr-x  2 root          group_max         4096 Apr 28 14:53 folder_min
@@ -95,15 +103,74 @@ drwxr-xr-x  2 root          group_max         4096 Apr 28 14:53 folder_min
 ```
 
 Команды:
+
+```console
 sudo setfacl -m g:group_max:rwx folder_max
 sudo setfacl -m g:group_max:rwx folder_min
 sudo setfacl -m g:group_min:rwx folder_min
+```
 
 Результат:
+
 Группа *_max обладает полным доступом к папкам *_max и *_min, т.к. является владельцем. Группа *_min обладает правом на чтение и исполнение к папке *_max и обладает
 полным доступом к папке *_min
 
 #### 1.5. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_max, который пишет текущую дату/время в файл output.log в текущей директории
+
+Для начала переключаемся на нужного пользователя
+
+```console
+timurverycool@DESKTOP-E880T0K:~$ su - user_max_1
+Password:
+user_max_1@DESKTOP-E880T0K:~$
+```
+
+Идем в нужную папку
+
+```console
+user_max_1@DESKTOP-E880T0K:~$ cd /usr/local/folder_max/
+```
+
+Там создаем файл ```script_max``` командой:
+
+```console
+touch script_max
+```
+Теперь открываем файл:
+
+```console
+nano script_max
+```
+
+Прописываем сам скрипт
+
+```console
+#!/bin/bash
+date | tee output.log
+```
+Запускаем файл командами:
+
+```console
+chmod g=rwx script_max
+./script_max
+```
+
+Результаты:
+
+В папке ```folder_max``` появились файлы ```script_max``` и ```output.log```:
+
+```console
+user_max_1@DESKTOP-E880T0K:/usr/local/folder_max$ ls -l
+total 8
+-rw-rw-r-- 1 user_max_1 user_max_1 29 Apr 28 20:49 output.log
+-rwxrwxr-x 1 user_max_1 user_max_1 35 Apr 28 20:35 script_max
+```
+
+С помощью команды: ```nano output.log``` открываем ```output.log``` и видим там таймкод:
+
+```console
+Fri Apr 28 20:49:56 MSK 2023
+```
 
 #### 1.6. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_max, который пишет текущую дату/время в файл output.log в директории *_min
 

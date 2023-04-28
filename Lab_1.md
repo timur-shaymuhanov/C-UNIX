@@ -70,6 +70,34 @@ user_min_1:x:1002:1004:,,,:/home/user_min_1:/bin/bash
 
 #### 1.4. Для пользователей из группы *_max дать полный доступ на директории *_max и *_min. Для пользователей группы *_min дать полный доступ только на директорию *_min
 
+Команды:
+
+```console
+sudo chown :group_max folder_max
+sudo chown :group_max folder_max
+```
+
+Результат:
+
+```console
+(base) timurverycool@DESKTOP-E880T0K:~$ ls -l
+...
+drwxr-xr-x  2 root          group_max         4096 Apr 28 14:52 folder_max
+drwxr-xr-x  2 root          group_min         4096 Apr 28 14:53 folder_min
+...
+```
+
+Группа group_max является владельцем папок folder_max и folder_min
+
+Команды:
+sudo setfacl -m g:group_max:rwx folder_max
+sudo setfacl -m g:group_max:rwx folder_min
+sudo setfacl -m g:group_min:rwx folder_min
+
+Результат:
+Группа *_max обладает полным доступом к папкам *_max и *_min, т.к. является владельцем. Группа *_min обладает правом на чтение и исполнение к папке *_max и обладает
+полным доступом к папке *_min
+
 #### 1.5. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_max, который пишет текущую дату/время в файл output.log в текущей директории
 
 #### 1.6. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_max, который пишет текущую дату/время в файл output.log в директории *_min

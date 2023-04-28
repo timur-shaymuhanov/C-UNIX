@@ -261,4 +261,80 @@ Fri Apr 28 21:11:43 MSK 2023
 
 #### 1.8. Создать и исполнить (пользователем из той же категории) скрипт в директории folder_min, который пишет текущую дату/время в файл output.log в директории *_max
 
+Там создаем файл ```script_min``` командой:
+
+```console
+touch script_min
+```
+Теперь открываем файл:
+
+```console
+nano script_min
+```
+
+Прописываем сам скрипт
+
+```console
+#!/bin/bash
+date | tee /usr/local/folder_max/output.log
+```
+
+Запускаем файл командами:
+
+```console
+chmod a=rwx script_min
+./script_min
+```
+
+Результаты:
+
+Получаем сообщение 
+
+```console
+user_min_1@DESKTOP-E880T0K:/usr/local/folder_min$ ./script_min
+tee: /usr/local/folder_max/output.log: Permission denied
+Fri Apr 28 21:40:55 MSK 2023
+```
+
+так как у пользователя ```user_min``` нет прав на папку ```folder_max```. Удостоверимся, проверив файл ```/usr/local/folder_max/output.log``` с помощью команды ```nano output.log```. Видим только старый таймкод:
+
+```console
+Fri Apr 28 20:49:56 MSK 2023
+```
+
+и сообщение внизу ```[ File 'output.log' is unwritable ]```
+
 #### 1.9. Вывести перечень прав доступа у папок *_min/ *_max, а также у всего содержимого внутри
+
+Для перечня прав доступа используем команду ```ls -l``` в соответствующей директории
+
+Результаты:
+
+В папке ```/usr/local/folder_max```:
+
+```console
+user_min_1@DESKTOP-E880T0K:/usr/local/folder_max$ ls -l
+total 12
+-rw-rw-r-- 1 user_max_1 user_max_1 29 Apr 28 20:49 output.log
+-rwxrwxr-x 1 user_max_1 user_max_1 35 Apr 28 20:35 script_max
+-rwxrwxrwx 1 user_max_1 user_max_1 56 Apr 28 21:11 script_min
+```
+
+В папке ```/usr/local/folder_min```:
+
+```console
+user_min_1@DESKTOP-E880T0K:/usr/local/folder_min$ ls -l
+total 8
+-rw-rw-r-- 1 user_max_1 user_max_1 29 Apr 28 21:11 output.log
+-rwxrwxr-x 1 user_min_1 user_min_1 56 Apr 28 21:34 script_min
+```
+
+В папке ```/usr/local/```:
+
+```console
+user_min_1@DESKTOP-E880T0K:/usr/local$ ls -l
+...
+drwxrwxr-x+ 2 root group_max 4096 Apr 28 21:11 folder_max
+drwxrwxr-x+ 2 root group_max 4096 Apr 28 21:34 folder_min
+...
+```

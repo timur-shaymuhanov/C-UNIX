@@ -89,7 +89,7 @@ group_min:x:1002:user_min_1
 
 ```console
 sudo chown :group_max folder_max
-sudo chown :group_max folder_max
+sudo chown :group_max folder_min
 ```
 
 Результат:

@@ -357,10 +357,54 @@ date >> output.log
 
 2.2. Собрать образ со скриптами выше и с пакетом nano (docker build)
 
+Создаем ```Dockerfile``` и пишем в него следующий скрипт:
 
+```console
+FROM ubuntu:22.04
+RUN apt update -y && apt install -y nano
+COPY ./script_2 /script_2
+```
+Далее создадим образ нашего ```script_2``` командой:
+
+```condole
+docker build -t lab1 .
+```
+
+Посмотрим, что из этого получилось с помощью ```docker images```. Получаем:
+
+```console
+REPOSITORY       TAG       IMAGE ID       CREATED          SIZE
+script_2_image   latest    f5fac2ca123c   37 seconds ago   118MB
+```
 
 2.3. Запустить образ (docker run)
 
+С помощью команд:
+
+```console
+timurverycool@DESKTOP-E880T0K:/usr/local$ sudo docker run -it script_2_image
+root@d50e50f82f34:/# 
+```
+
 2.4. Выполнить скрипт, который подложили при сборке образа
 
+Пишем:
+
+```console
+root@d50e50f82f34:/# bash script_2
+```
+
+В результате видим ```output.log``` с записанной датой в ```docker```:
+
+```console
+root@d50e50f82f34:/# ls
+bin   dev  home  lib32  libx32  mnt  output.log  root  sbin      srv  tmp  var
+boot  etc  lib   lib64  media   opt  proc        run   script_2  sys  usr
+```
+
 2.5. Вывести список пользователей в собранном образе
+
+```console
+timurverycool@DESKTOP-E880T0K:/usr/local$ sudo docker run --rm script_2_image id
+uid=0(root) gid=0(root) groups=0(root)
+```

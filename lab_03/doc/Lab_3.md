@@ -23,6 +23,72 @@ plus / minus / power; Ханойская башня, результат корр
 
 ### Решение
 
+```C++
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+double pow(double a, double b)
+{
+    double res = 1;
+    for (int i = 0; i < b; i++)
+    {
+        res *= a;
+    }
+    return res;
+}
+
+int main(int argc, char* argv[])
+{
+    //cout << "Input format: a + b | a - b | a ^ b; For calculating a^b b must be integer \n";
+    double a = stod(argv[1]);
+    double b = stod(argv[3]);
+    string oper = argv[2];
+    
+    if (oper == "plus" or oper == "+")
+    {
+        cout << a << '+' << b << '=' << a + b << "\n";
+    }
+    else if (oper == "minus" or oper == "-")
+    {
+        
+        cout << a << '-' << b << '=' << a - b << "\n";
+    }
+    else if (oper == "power")
+    {
+        if (floor(b) == b)
+        {
+            cout << a << '^' << b << '=' << pow(a, b) << "\n";
+        }
+        else
+        {
+            cout << "b must be integer \n";
+        }
+    }
+    else
+    {    
+        cout << "Error: Incorrect operator";
+    }
+}
+```
+### Результат
+
+```console
+C:\Users\Тимур>C:\Users\Тимур\C-UNIX\lab_03\build\lab3_calc.exe 5.2 plus 7.3
+5.2+7.3=12.5
+
+C:\Users\Тимур>C:\Users\Тимур\C-UNIX\lab_03\build\lab3_calc.exe 5.2 minus 7.3
+5.2-7.3=-2.1
+
+C:\Users\Тимур>C:\Users\Тимур\C-UNIX\lab_03\build\lab3_calc.exe 5.2 power 7.3
+b must be integer
+
+C:\Users\Тимур>C:\Users\Тимур\C-UNIX\lab_03\build\lab3_calc.exe 5.2 abrakadabra 7.3
+Error: Incorrect operator
+```
+
 ## Задача 2 [C++ RECURSION] Решить задачу ханойской башни с использованием рекурсии
 
 Описание: Ханойская башня является одной из популярных головоломок XIX века.

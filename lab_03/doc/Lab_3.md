@@ -22,7 +22,6 @@ plus / minus / power; Ханойская башня, результат корр
 операторов только с использованием функций, условий, циклов, +, - и *.
 
 ### Решение
-
 ```C++
 #include <iostream>
 #include <string>
@@ -42,16 +41,15 @@ double pow(double a, double b)
 
 int main(int argc, char* argv[])
 {
-    //cout << "Input format: a + b | a - b | a ^ b; For calculating a^b b must be integer \n";
     double a = stod(argv[1]);
     double b = stod(argv[3]);
     string oper = argv[2];
     
-    if (oper == "plus" or oper == "+")
+    if (oper == "plus")
     {
         cout << a << '+' << b << '=' << a + b << "\n";
     }
-    else if (oper == "minus" or oper == "-")
+    else if (oper == "minus")
     {
         
         cout << a << '-' << b << '=' << a - b << "\n";
@@ -69,7 +67,7 @@ int main(int argc, char* argv[])
     }
     else
     {    
-        cout << "Error: Incorrect operator";
+        cout << "Error: Incorrect operator. Choose one of 'plus', 'minus', 'power'. \n";
     }
 }
 ```

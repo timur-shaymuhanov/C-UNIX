@@ -84,7 +84,7 @@ C:\Users\Тимур>C:\Users\Тимур\C-UNIX\lab_03\build\lab3_calc.exe 5.2 po
 b must be integer
 
 C:\Users\Тимур>C:\Users\Тимур\C-UNIX\lab_03\build\lab3_calc.exe 5.2 abrakadabra 7.3
-Error: Incorrect operator
+Error: Incorrect operator. Choose one of 'plus', 'minus', 'power'.
 ```
 
 ## Задача 2 [C++ RECURSION] Решить задачу ханойской башни с использованием рекурсии

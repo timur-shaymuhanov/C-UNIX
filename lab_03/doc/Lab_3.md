@@ -101,3 +101,57 @@ Error: Incorrect operator. Choose one of 'plus', 'minus', 'power'.
 память списка перед завершением программы.
 
 ### Решение
+```C++
+#include <iostream>
+#include<string>
+#include <list>
+#include <cmath>
+
+using namespace std;
+
+void hanoi(int n, char source, char destination, char auxiliary, list<string> &actions) {
+    if (n == 1) {
+        actions.push_back("disk 1 from " + string(1, source) + " to " + string(1, destination));
+        return;
+    }
+
+    hanoi(n - 1, source, auxiliary, destination, actions);
+    actions.push_back("disk " + to_string(n) + " from " + string(1, source) + " to " + string(1, destination));
+    hanoi(n - 1, auxiliary, destination, source, actions);
+
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of disks: ";
+    cin >> n;
+    list<string> actions;
+    hanoi(n, 'A', 'B', 'C', actions);
+
+    for (string step : actions) {
+        cout << step << endl;
+    }
+
+    int num = pow(2, n) - 1;
+    cout << "Algorithm has done " << actions.size() << " iterations | Optimal number of iterations is " << num;  
+    actions.clear();
+}
+```
+
+
+### Результат
+```console
+Enter the number of disks: 3
+disk 1 from A to B
+disk 2 from A to C
+disk 1 from B to C
+disk 3 from A to B
+disk 1 from C to A
+disk 2 from C to B
+disk 1 from A to B
+Algorithm has done 7 iterations | Optimal number of iterations is 7
+```
+
+## Вывод
+
+Реализован простейший калькулятор и рекурсивный алгоритм решения задачи с Ханойскими Башнями. Ранее не имея опыта программирования на C++, познакомился со строками, списками и реализацией рекурсии на этом языке.

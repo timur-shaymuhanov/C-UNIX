@@ -62,23 +62,34 @@ double time(const double &x, const int &n){
 }
 
 int main() {
+
+    int n_exps = 100;
     double x = 2.39;
     int n = 10000;
-    double t = time(x, n);
+    double t;
+    
+    for (int i = 0; i<n_exps; i++){
+        t += time(x, n);
+    }
+    
+
+
     cout << "Argument: " << x << "\n";
-    cout << "Execution time of " << n << " sequential calculations: " << t <<" sec \n";
+    cout << "Execution time of " << n << " sequential calculations: " << t/n_exps <<" sec \n";
 
     n = 100000;
-    t = time(x, n);
-    cout << "Execution time of " << n << " sequential calculations: " << t <<" sec \n";
+    for (int i = 0; i<n_exps; i++){
+        t += time(x, n);
+    }
+    cout << "Execution time of " << n << " sequential calculations: " << t/n_exps <<" sec \n";
 }
 ```
 ### Результат
 
 ```console
 Argument: 2.39
-Execution time of  10 000 sequential calculations: 0.001 sec
-Execution time of 100 000 sequential calculations: 0.004 sec
+Execution time of 10000 sequential calculations: 0.00044 sec
+Execution time of 100000 sequential calculations: 0.00481 sec 
 ```
 
 ## Задача 2 [C++ THREADS] Параллельные вычисления через потоки
@@ -159,17 +170,26 @@ double time(const double &x, const int &n){
 }
 
 int main() {
+
+    int n_exps = 100;
     double x = 2.39;
     int n = 10000;
-    double t = time(x, n);
+    double t;
+    
+    for (int i = 0; i<n_exps; i++){
+        t += time(x, n);
+    }
+    
 
 
     cout << "Argument: " << x << "\n";
-    cout << "Execution time of " << n << " multithreaded calculations: " << t <<" sec \n";
+    cout << "Execution time of " << n << " multithreaded calculations: " << t/n_exps <<" sec \n";
 
     n = 100000;
-    t = time(x, n);
-    cout << "Execution time of " << n << " multithreaded calculations: " << t <<" sec \n";
+    for (int i = 0; i<n_exps; i++){
+        t += time(x, n);
+    }
+    cout << "Execution time of " << n << " multithreaded calculations: " << t/n_exps <<" sec \n";
 }
 ```
 
@@ -177,8 +197,8 @@ int main() {
 ### Результат
 ```console
 Argument: 2.39
-Execution time of 10000 multithreaded calculations: 0.005 sec 
-Execution time of 100000 multithreaded calculations: 0.018 sec
+Execution time of 10000 multithreaded calculations: 0.00369 sec
+Execution time of 100000 multithreaded calculations: 0.01763 sec 
 ```
 
 ## Задача 3 [C++ PROCESS] Параллельные вычисления через процессы
